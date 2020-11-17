@@ -61,6 +61,23 @@ class EmailSenderTest {
         //then
         assertThatExceptionOfType(InvalidEmailException.class).isThrownBy(() -> {
             sender.sendEmail("toEmail.com", subject, text);
+        }).withMessage("Email address of recipient invalid");
+    }
+
+    @Test
+    void shouldNotSendEmailWhenSubjectIsEmpty() {
+        //then
+        assertThatExceptionOfType(InvalidEmailException.class).isThrownBy(() -> {
+            sender.sendEmail(toEmail, "", text);
         });
     }
+
+    @Test
+    void shouldNotSendEmailWhenRecipientIsEmpty() {
+        //then
+        assertThatExceptionOfType(InvalidEmailException.class).isThrownBy(() -> {
+            sender.sendEmail("", subject, text);
+        });
+    }
+
 }

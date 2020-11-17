@@ -23,7 +23,7 @@ public class EmailSender {
         this.transporter = transporter;
     }
 
-    void sendEmail(String to, String subject, String content) {
+    ExecutionStatus sendEmail(String to, String subject, String content) {
         Properties prop = propertiesLoader.loadProperties();
         MsgInfo msgInfo = new MsgInfo(propertiesLoader.getFrom(), to, subject, content);
         messageValidator.validateMessage(msgInfo);
@@ -33,9 +33,10 @@ public class EmailSender {
         try {
             MimeMessage message = messageBuilder.buildMessage(msgInfo, session);
             transporter.sendMessage(message, propertiesLoader.getUsername(), propertiesLoader.getPassword());
-
+            return ExecutionStatus.SUCCESS;
         } catch (MessagingException mex) {
             mex.printStackTrace();
+            return ExecutionStatus.FAILURE;
         }
     }
 }
