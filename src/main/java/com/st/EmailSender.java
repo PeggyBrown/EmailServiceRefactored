@@ -37,6 +37,10 @@ public class EmailSender {
         } catch (MessagingException mex) {
             mex.printStackTrace();
             return ExecutionStatus.FAILURE;
+        } catch (Exception mex) {
+            System.out.println("other Exception");
+            mex.printStackTrace();
+            return ExecutionStatus.FAILURE;
         }
     }
 }
